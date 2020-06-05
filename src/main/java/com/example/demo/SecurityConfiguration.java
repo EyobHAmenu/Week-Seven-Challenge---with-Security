@@ -19,8 +19,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     protected void configure(HttpSecurity httpSecurity) throws Exception{
         httpSecurity
                 .authorizeRequests()
-                .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/h2-console").hasRole("ADMIN")
+                .antMatchers("/update/{id}", "/delete/{id}").authenticated()
+                .antMatchers("/add", "/h2-console").authenticated()
                 .antMatchers("/").permitAll()
                 .antMatchers("/register").not().authenticated()
                 .and()
@@ -28,7 +28,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .and()
                 .logout()
                 .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
-                .logoutSuccessUrl("/login").permitAll().permitAll();
+                .logoutSuccessUrl("/").permitAll().permitAll();
 
         httpSecurity.csrf()
                 .ignoringAntMatchers("/h2-console/**");

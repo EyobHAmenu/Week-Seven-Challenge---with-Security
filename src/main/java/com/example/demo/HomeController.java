@@ -4,10 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -52,12 +49,52 @@ public class HomeController {
             return "registration";
         }
 
-        else {
-            userService.saveUser(user);
-//            userRepository.save(user);
-            model.addAttribute("message", "User Account Created");
-        }
+        userRepository.save(user);
+        //userService.saveUser(user);
+        model.addAttribute("message", "User Account Created");
+
         return "confirmation";
+    }
+
+    @GetMapping("/add")
+    public String messageForm(Model model) {
+        model.addAttribute("message", new Message());
+        return "messageForm";
+    }
+
+    @PostMapping("/add")
+    public String processMassageForm(@Valid @ModelAttribute("message") Message message,
+                                     BindingResult result){
+        if(result.hasErrors()){
+            return "messageForm";
+        }
+
+        message.setUser(userService.getUser());
+        messageRepository.save(message);
+        return "redirect:/";
+    }
+
+    @RequestMapping("/update/{id}")
+    public String updateCourse(@PathVariable("id") long id, Model model){
+        model.addAttribute("message", messageRepository.findById(id));
+        return "updateTxtForm";
+    }
+
+    @PostMapping("/updateAdd")
+    public String updateMassage(@Valid @ModelAttribute("message") Message message,
+                                     BindingResult result){
+        if(result.hasErrors()){
+            return "messageForm";
+        }
+
+        messageRepository.save(message);
+        return "redirect:/";
+    }
+
+    @RequestMapping("/delete/{id}")
+    public String delCourse(@PathVariable("id") long id){
+        messageRepository.deleteById(id);
+        return "redirect:/";
     }
 
 }

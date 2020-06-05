@@ -5,11 +5,39 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
-    <title>confirmation page</title>
+    <title>message</title>
 </head>
 <body>
-    <h1>Congratulation, [[${message}]]</h1>
-    <p>Click here to log in <button><a href="/login">Log-In</a></button></p>
+    <h1> Add new message</h1>
+    <form autocomplete="off"
+          action="#"
+          th:action="@{/add}"
+          th:object="${message}"
+          method="post">
+
+        <input type="hidden" th:field="*{id}">
+
+        Title:
+        <mark><strong>
+                        <span th:if="${#fields.hasErrors('title')}"
+                              th:errors="*{title}">First Name error</span>
+        </strong></mark>
+        <input type="text" id="title" placeholder="Title"
+               th:field="*{title}"/><br/>
+
+        Massage:
+        <mark><strong>
+                        <span th:if="${#fields.hasErrors('description')}"
+                              th:errors="*{description}">Last Name error</span>
+        </strong></mark>
+        <label for="description"></label>
+        <textarea rows="3" id="description" placeholder="txt"
+                  th:field="*{description}">
+        </textarea><br/>
+
+        <button type="submit" class="btn btn-default">Submit</button>
+
+    </form>
 
 
 

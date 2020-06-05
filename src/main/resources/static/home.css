@@ -1,0 +1,42 @@
+body {
+    background-color: wheat;
+    font-family: 'Satisfy', cursive;
+    padding: 50px;
+
+}
+
+body h1 {
+    text-align: center;
+    font-weight: bolder;
+    color: goldenrod;
+}
+
+body th {
+    font-size: 25px;
+    text-decoration-line: underline;
+}
+
+.form {
+    font-size: 30px;
+}
+
+.all {
+    text-align: center;
+    font-weight: bolder;
+    color: darkolivegreen;
+    font-size: 70px;
+    text-decoration-line: underline;
+}
+
+.home-2 {
+    font-size: 25px;
+    color: black;
+}
+
+.home-1 {
+    font-size: 50px;
+}
+
+.display-3 {
+    text-decoration-line: underline;
+}
