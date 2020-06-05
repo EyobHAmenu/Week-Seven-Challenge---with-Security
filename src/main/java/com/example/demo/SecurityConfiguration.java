@@ -22,7 +22,7 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 .antMatchers("/update/{id}", "/delete/{id}").hasAnyAuthority("ADMIN")
                 .antMatchers("/add", "/h2-console").authenticated()
                 .antMatchers("/").permitAll()
-                .antMatchers("/register").not().authenticated()
+                .antMatchers("/register","/login").not().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()

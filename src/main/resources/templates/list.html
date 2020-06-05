@@ -37,6 +37,7 @@
                         <a class="nav-link"
                            href="/">
                             <div class="home-2">
+
                                 <button class="btn btn-outline-warning my-2 my-sm-0">Home</button>
                             </div>
                             <span class="sr-only">(current)</span>
@@ -47,7 +48,11 @@
                         <a class="nav-link"
                            href="/login">
                             <div class="home-2">
-                                <button class="btn btn-outline-warning my-2 my-sm-0">Log in</button>
+                                <div class="home-2">
+                                    <span th:if="${user} != authenticated.name">
+                                        <button class="btn btn-outline-warning my-2 my-sm-0">Log in</button>
+                                     </span>
+                                </div>
                             </div>
                             <span class="sr-only">(current)</span>
                         </a>
@@ -57,7 +62,9 @@
                         <a class="nav-link"
                            href="/register">
                             <div class="home-2">
-                                <button class="btn btn-outline-warning my-2 my-sm-0">Creat Account</button>
+                                <span th:if="${user} != authenticated.name">
+                                    <button class="btn btn-outline-warning my-2 my-sm-0">Creat Account</button>
+                                </span>
                             </div>
                             <span class="sr-only">(current)</span>
                         </a>
