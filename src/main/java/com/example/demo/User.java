@@ -7,7 +7,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
-@Table(name="User_Data")
+@Table(name="Users_DB")
 public class User {
 
     @Id
@@ -72,6 +72,11 @@ public class User {
     public void setPassword(String password) {
         BCryptPasswordEncoder passwordEncoder = new BCryptPasswordEncoder();
         this.password = passwordEncoder.encode(password);
+    }
+
+    public String clearPassword(){
+        this.password = "";
+        return password;
     }
 
     public String getFirstName() {

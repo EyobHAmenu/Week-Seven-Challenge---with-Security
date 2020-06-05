@@ -6,8 +6,10 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.security.web.util.matcher.AntPathRequestMatcher;
 
 import javax.sql.DataSource;
 
@@ -18,13 +20,15 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
         httpSecurity
                 .authorizeRequests()
                 .antMatchers("/admin").hasRole("ADMIN")
-                .antMatchers("/register").hasRole("ADMIN")
                 .antMatchers("/h2-console").hasRole("ADMIN")
-                .antMatchers("/**").hasAnyRole("ADMIN", "USER")
+                .antMatchers("/").permitAll()
+                .antMatchers("/register").not().authenticated()
                 .and()
                 .formLogin().loginPage("/login").permitAll()
                 .and()
-                .logout().logoutSuccessUrl("/login?logout=true").permitAll();
+                .logout()
+                .logoutRequestMatcher(new AntPathRequestMatcher("/logout"))
+                .logoutSuccessUrl("/login").permitAll().permitAll();
 
         httpSecurity.csrf()
                 .ignoringAntMatchers("/h2-console/**");
@@ -36,20 +40,24 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
 
     }
 
-    @Autowired
-    private DataSource dataSource;
 
     @Autowired
-    public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-        auth.jdbcAuthentication().
-                dataSource(dataSource)
-                .usersByUsernameQuery("select username, password, enabled from" + " users_db where username=?")
-                .authoritiesByUsernameQuery("select username, role from roles" +  " where username=?");
-    }
+    UserRepository userRepository;
 
     @Bean
     public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
+
+    @Override
+    public UserDetailsService userDetailsServiceBean() throws Exception {
+        return new SSUserDetailsService(userRepository );
+    }
+
+    @Override
+    protected void configure(AuthenticationManagerBuilder auth) throws Exception{
+        auth.userDetailsService((userDetailsServiceBean()))
+                .passwordEncoder(passwordEncoder());
+    }
 }

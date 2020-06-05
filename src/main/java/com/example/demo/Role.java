@@ -4,6 +4,7 @@ import javax.persistence.*;
 import java.util.Collection;
 
 @Entity
+@Table(name="Roles")
 public class Role {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
@@ -12,7 +13,7 @@ public class Role {
     @Column(unique = true)
     private String role;
 
-    @ManyToMany(mappedBy = "roles", fetch = FetchType.LAZY)
+    @ManyToMany(mappedBy = "roles", fetch = FetchType.EAGER)
     private Collection<User> users;
 
     public Role() {

@@ -27,18 +27,29 @@ public class DataLoader implements CommandLineRunner {
         Role adminRole = roleRepository.findByRole("ADMIN");
         Role userRole = roleRepository.findByRole("USER");
 
-        User user = new User("eyo@123.com", "password", "Eyob",
+        User user1 = new User("eyo@123.com", "eyob", "Eyob",
                 "Amenu", true,
                 "eyob");
-        user.setRoles(Arrays.asList(userRole));
-        userRepository.save(user);
+        user1.setRoles(Arrays.asList(userRole));
+        userRepository.save(user1);
 
-        user = new User("admin@admin.com", "password",
-                "Admin",
-                "User", true,
+        User user2 = new User("admin@admin.com", "admin", "Admin",
+                "Admin", true,
                 "admin");
-        user.setRoles(Arrays.asList(adminRole));
-        userRepository.save(user);
+        user2.setRoles(Arrays.asList(adminRole));
+        userRepository.save(user2);
+
+        Message message1 = new Message("COVID-19",
+                "COVID-19 is caused by a corona virus called SARS-CoV-2.");
+        message1.setUser(user2);
+        messageRepository.save(message1);
+
+        Message message2 = new Message("Update on COVID-19",
+                "Older adults and people who have severe underlying medical conditions " +
+                        "like heart or lung disease or diabetes seem to be at higher risk for developing " +
+                        "more serious complications from COVID-19 illness.");
+        message2.setUser(user1);
+        messageRepository.save(message2);
 
     }
 }

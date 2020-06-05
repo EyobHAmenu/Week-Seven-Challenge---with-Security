@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>chat list</title>
+</head>
+<body>
+    <h1>User posts</h1>
+
+    <button>Hello, [[${user}]]</button>
+    <button><a href="/login">Log-In</a></button>
+    <button><a href="/register">Creat Account</a></button>
+
+    <div th:each="message : ${messages}">
+        Title: [[${message.title}]] <br>
+        Message: [[${message.description}]] <br>
+        posted by: [[${message.user.username}]] <br>
+    </div>
+
+    <button><a href="/logout">log out</a></button>
+</body>
+</html>
