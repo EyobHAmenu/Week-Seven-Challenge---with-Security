@@ -59,6 +59,9 @@ public class HomeController {
     @GetMapping("/add")
     public String messageForm(Model model) {
         model.addAttribute("message", new Message());
+        if(userService.getUser() != null) {
+            model.addAttribute("user", userService.getUser().getUsername());
+        }
         return "messageForm";
     }
 
@@ -77,6 +80,9 @@ public class HomeController {
     @RequestMapping("/update/{id}")
     public String updateCourse(@PathVariable("id") long id, Model model){
         model.addAttribute("message", messageRepository.findById(id));
+        if(userService.getUser() != null) {
+            model.addAttribute("user", userService.getUser().getUsername());
+        }
         return "updateTxtForm";
     }
 
@@ -86,7 +92,6 @@ public class HomeController {
         if(result.hasErrors()){
             return "messageForm";
         }
-
         messageRepository.save(message);
         return "redirect:/";
     }

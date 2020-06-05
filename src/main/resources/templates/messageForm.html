@@ -5,39 +5,95 @@
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css"
           integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
     <link href="https://fonts.googleapis.com/css2?family=Satisfy&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="home.css">
     <title>message</title>
 </head>
 <body>
-    <h1> Add new message</h1>
-    <form autocomplete="off"
-          action="#"
-          th:action="@{/add}"
-          th:object="${message}"
-          method="post">
 
-        <input type="hidden" th:field="*{id}">
+    <div class="home-0">
+        <nav class="navbar navbar-expand-lg navbar-dark bg-danger">
+            <div class="home-1">
+                Chat
+            </div>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+                    aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
 
-        Title:
-        <mark><strong>
-                        <span th:if="${#fields.hasErrors('title')}"
-                              th:errors="*{title}">First Name error</span>
-        </strong></mark>
-        <input type="text" id="title" placeholder="Title"
-               th:field="*{title}"/><br/>
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                <ul class="navbar-nav mr-auto">
+                    <li class="nav-item active">
+                        <a class="nav-link"
+                           href="#">
+                            <div class="home-2">
+                                <button class="btn btn-outline-warning my-2 my-sm-0">Hello, [[${user}]]</button>
+                            </div>
+                            <span class="sr-only"></span>
+                        </a>
+                    </li>
 
-        Massage:
-        <mark><strong>
-                        <span th:if="${#fields.hasErrors('description')}"
-                              th:errors="*{description}">Last Name error</span>
-        </strong></mark>
-        <label for="description"></label>
-        <textarea rows="3" id="description" placeholder="txt"
-                  th:field="*{description}">
-        </textarea><br/>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="/">
+                            <div class="home-2">
+                                <button class="btn btn-outline-warning my-2 my-sm-0">Home</button>
+                            </div>
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
 
-        <button type="submit" class="btn btn-default">Submit</button>
+                    <li class="nav-item">
+                        <a class="nav-link"
+                           href="//logout">
+                            <div class="home-2">
+                                <button class="btn btn-outline-warning my-2 my-sm-0">Log out</button>
+                            </div>
+                            <span class="sr-only">(current)</span>
+                        </a>
+                    </li>
+                </ul>
+                <form class="form-inline my-2 my-lg-0">
+                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search">
+                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+                </form>
+            </div>
+        </nav>
+    </div>
 
-    </form>
+    <div class="all"> Add new message</div>
+    <div class="card">
+        <div class="card-body">
+        <form autocomplete="off"
+              action="#"
+              th:action="@{/add}"
+              th:object="${message}"
+              method="post">
+
+            <input type="hidden" th:field="*{id}">
+
+            Title:
+            <mark><strong>
+                            <span th:if="${#fields.hasErrors('title')}"
+                                  th:errors="*{title}">First Name error</span>
+            </strong></mark>
+            <input type="text" id="title" placeholder="Title"
+                   th:field="*{title}"/><br/>
+
+            Massage:
+            <mark><strong>
+                            <span th:if="${#fields.hasErrors('description')}"
+                                  th:errors="*{description}">Last Name error</span>
+            </strong></mark>
+            <label for="description"></label>
+            <textarea rows="3" id="description" placeholder="txt"
+                      th:field="*{description}">
+            </textarea><br/>
+
+            <button type="submit" class="btn btn-default">Submit</button>
+
+        </form>
+        </div>
+    </div>
 
 
 
